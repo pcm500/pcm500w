@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" content=text/html;charset=UTF-8 meta http-equiv="Content-Type"/>
+<style>
+    body,head{color:#666;font:14px "Roboto", sans-serif;-webkit-font-smoothing:antialiased;background-color:#eee}
+</style>
+<html>
+    <head>
+    <script type="text/javascript" charset="utf-8" src='./js/jquery-1.11.1.min.js'></script>
+    <script type="text/javascript" charset="utf-8" src='./js/WSEncoder-1.0.0.min.js'></script>
+    <script type="text/javascript" charset="utf-8" src='./js/WSComm-1.0.0.min.js'></script>
+    
+    <script type="text/javascript">
+    </script>
+    <style type="text/css"> @import url("./css/style.css");</style>
+    </head>
+    
+    <body>
+        <canvas align=center id='canvas' dir="rtl" width='384'  height='900'>Canvas not supported</canvas>
+        <img id="barcode" style="display: none;"/>
+        <script type="text/javascript" charset="utf-8" src='./js/JsBarcode.all.min.js'></script>
+        
+    <p align="center">
+        <button id="print_data" class="buttons">PRINT</button>
+    </p>    
+
+
+    <script type="text/javascript" charset="utf-8">
+
+        var startY = 10;
+        var startX = 5;
+        var offset = 20;
+        var linespace = 30;
+        var defaultFont = "20px HelveticaNeue-Thin";
+        
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d');
+
+        function drawText(a){
+            a.font != void 0 ? context.font = a.font : context.font = defaultFont;
+            
+            var posX = startX;
+            var posY = startY;
+
+            if(a.align == "center"){
+                context.textAlign = "center";
+                posX = canvas.width/2;
+            }else if(a.align == "right"){
+                posX = canvas.width - startX;
+                context.textAlign = "right";
+            }else{
+                context.textAlign = "left";
+            }
+
+            context.fillText(a.string, posX, posY);
+        }
+        
+        var logo = new Image();
+        logo.src = './img/Ramguz1.bmp';
+        logo.onload = function() {
+            context.drawImage(logo, (canvas.width - logo.width)/2, startY, logo.width, logo.height), startY+= logo.height + 30;
+
+            drawText({string:"Optimizamos Procesos Incorporando Innovacion Para Sostenibilidad",font:"12px Arial" , align:"center"}), startY+= 60;
+            drawText({string:": MACHINE"}),       drawText({string:"", align:"right"}), startY+= linespace;
+            drawText({string:": FLUID"}),         drawText({string:"", align:"right"}), startY+= linespace;
+            drawText({string:": SAMPLE POINT"}),  drawText({string:"", align:"right"}), startY+= linespace;
+        
+            drawText({string:"-----------------------------------------------------------------------",align:"center"}), startY+= linespace;
+            drawText({string:"CODIGO"}),            drawText({string:" 14 / 6 / 4", align:"center"}), startY+= linespace;
+            drawText({string:": TIME"}),            drawText({string:"", align:"center"}), startY+= linespace;
+            drawText({string:": SERIAL"}),          drawText({string:"", align:"center"}), startY+= linespace;
+            drawText({string:": VISCOSITY"}),       drawText({string:"", align:"center"}), startY+= linespace;
+            drawText({string:": WATER IN OIL"}),    drawText({string:"", align:"center"}), startY+= linespace;
+            drawText({string:": WARNINGS"}),        drawText({string:"", align:"center"}), startY+= linespace;
+           
+            drawText({string:"----------------------------------------------------------------------",align:"center"}), startY+= linespace;
+            drawText({string:": COMMENTS"}),          drawText({string:" :se recomienda ", align:"center"}), startY+= linespace;
+            drawText({string:":1"}),drawText({string:"", align:"center"}),startY+= linespace;
+            drawText({string:":2"}),drawText({string:"", align:"center"}),startY+= linespace;
+            drawText({string:":3"}),drawText({string:"", align:"center"}),startY+= linespace;
+            drawText({string:":4"}),drawText({string:"", align:"center"}),startY+= linespace;
+            drawText({string:":5"}),drawText({string:"", align:"center"}),startY+= linespace;
+           
+
+            var logo2 = new Image();
+        logo2.src = './img/QR.bmp';
+        logo2.onload = function() {
+            context.drawImage(logo2, (canvas.width - logo2.width)/2, startY, logo2.width, logo2.height), startY+= logo2.height + 30;
+        }
+           // var barcodeWidth = 300;
+           // var barcodeHeight = 100;
+            var image = document.getElementById('barcode');
+            JsBarcode("#barcode","9780199532179", {format:"EAN13", fontSize:10, width:barcodeWidth, height:barcodeHeight});
+
+            image.onload = function() {
+            context.drawImage(image, (canvas.width - barcodeWidth) /2, startY, barcodeWidth, barcodeHeight);
+            }
+        }
+    
+        function print_sample(){
+    
+            var comm = new WSComm();
+            var encoder = new WSEncoder();
+
+            var printableXml = encoder.addCanvas({ctx: context, x: 0, y:0, width:384, height:900, dithering:false});
+            comm.send(printableXml);    
+        };
+
+        var finishedCallback = function(result){
+            var code = result['ERR_CODE'];
+            
+            switch(code)
+            {
+                case "0": 
+                    alert("Success");
+                    break;
+                case "1": 
+                    alert("Printer is not connected.");
+                    break;
+                case "4": 
+                    alert("Session is not opened.");
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        $('#print_data').on('click', print_sample);
+    
+    </script>
+</body>
