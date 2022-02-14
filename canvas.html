@@ -25,6 +25,18 @@
 
 
     <script type="text/javascript" charset="utf-8">
+        var parametros = new URLSearchParams(window.location.search);
+        var MACHINE = parametros.get("machine");
+        var FLUID = parametros.get("fluid");
+        var POINT = parametros.get("point");
+        var CODE = parametros.get("code");
+        var TIME = parametros.get("time");
+        var HOUR = parametros.get("hour");
+        var SERIAL = parametros.get("serial");
+        var CPS = parametros.get("cps");
+        var PPM = parametros.get("ppm");
+        var WARNINGS = parametros.get("warnings");
+        var COMMENTS = parametros.get("comments");
 
         var startY = 10;
         var startX = 5;
@@ -60,25 +72,22 @@
             context.drawImage(logo, (canvas.width - logo.width)/2, startY, logo.width, logo.height), startY+= logo.height + 30;
 
             drawText({string:"Optimizamos Procesos Incorporando Innovacion Para Sostenibilidad",font:"12px Arial" , align:"center"}), startY+= 60;
-            drawText({string:": MACHINE"}),       drawText({string:"", align:"right"}), startY+= linespace;
-            drawText({string:": FLUID"}),         drawText({string:"", align:"right"}), startY+= linespace;
-            drawText({string:": SAMPLE POINT"}),  drawText({string:"", align:"right"}), startY+= linespace;
+            drawText({string:": MACHINE"}),       drawText({string:MACHINE, align:"center"}), startY+= linespace;
+            drawText({string:": FLUID"}),         drawText({string:FLUID, align:"center"}), startY+= linespace;
+            drawText({string:": SAMPLE POINT"}),  drawText({string:POINT, align:"center"}), startY+= linespace;
         
             drawText({string:"-----------------------------------------------------------------------",align:"center"}), startY+= linespace;
-            drawText({string:"CODIGO"}),            drawText({string:" 14 / 6 / 4", align:"center"}), startY+= linespace;
-            drawText({string:": TIME"}),            drawText({string:"", align:"center"}), startY+= linespace;
-            drawText({string:": SERIAL"}),          drawText({string:"", align:"center"}), startY+= linespace;
-            drawText({string:": VISCOSITY"}),       drawText({string:"", align:"center"}), startY+= linespace;
-            drawText({string:": WATER IN OIL"}),    drawText({string:"", align:"center"}), startY+= linespace;
-            drawText({string:": WARNINGS"}),        drawText({string:"", align:"center"}), startY+= linespace;
+            drawText({string:"CODIGO"}),            drawText({string:CODE, align:"center"}), startY+= linespace;
+            drawText({string:": TIME"}),            drawText({string:TIME+"/"+HOUR, align:"center"}), startY+= linespace;
+            drawText({string:": SERIAL"}),          drawText({string:SERIAL, align:"center"}), startY+= linespace;
+            drawText({string:": VISCOSITY"}),       drawText({string:CPS+"CPS", align:"center"}), startY+= linespace;
+            drawText({string:": WATER IN OIL"}),    drawText({string:PPM+"PPM", align:"center"}), startY+= linespace;
+            drawText({string:": WARNINGS"}),        drawText({string:WARNINGS, align:"center"}), startY+= linespace;
            
             drawText({string:"----------------------------------------------------------------------",align:"center"}), startY+= linespace;
             drawText({string:": COMMENTS"}),          drawText({string:" :se recomienda ", align:"center"}), startY+= linespace;
-            drawText({string:":1"}),drawText({string:"", align:"center"}),startY+= linespace;
-            drawText({string:":2"}),drawText({string:"", align:"center"}),startY+= linespace;
-            drawText({string:":3"}),drawText({string:"", align:"center"}),startY+= linespace;
-            drawText({string:":4"}),drawText({string:"", align:"center"}),startY+= linespace;
-            drawText({string:":5"}),drawText({string:"", align:"center"}),startY+= linespace;
+            drawText({string:""}),drawText({string:COMMENTS, align:"left"}),startY+= linespace;
+           
            
 
             var logo2 = new Image();
