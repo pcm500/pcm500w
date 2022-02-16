@@ -1,4 +1,4 @@
-## Samples
+
 
 
 ### Print image(canvas) receipt
