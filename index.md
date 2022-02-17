@@ -1,6 +1,6 @@
-## IMPRESION
+## PRINT
 
 
-### Print image(canvas) receipt
+### Print image receipt 
 
-> It is a sample that prints the canvas object. [[sample]](https://pcm500.github.io/pcm500w/index.html)
+> to print the receipt click. [[here]](https://pcm500.github.io/pcm500w/index.html)
