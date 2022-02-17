@@ -1,4 +1,4 @@
-## aque renuncio
+## IMPRESION
 
 
 ### Print image(canvas) receipt
