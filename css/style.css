@@ -4,7 +4,7 @@ body {
 }
 
 #canvas {
-    background: green;
+    background: #ffffff;
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -15,7 +15,7 @@ body {
 
 }
 
-.buttons
+.buttons                
 {
     width:90px;        
 }
